@@ -21,7 +21,13 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('products.index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Product</span></a>
+            <span>Products</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('tags.index') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Tags</span></a>
     </li>
 
     <li class="nav-item">

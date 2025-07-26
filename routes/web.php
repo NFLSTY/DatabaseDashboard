@@ -1,33 +1,30 @@
 <?php
  
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
  
-Route::controller(AuthController::class)->group(function () {
-    Route::get('register', 'register')->name('register');
-    Route::post('register', 'registerSave')->name('register.save');
-  
-    Route::get('login', 'login')->name('login');
-    Route::post('login', 'loginAction')->name('login.action');
-  
-    Route::get('logout', 'logout')->middleware('auth')->name('logout');
+// --- Guest Routes ---
+// Routes for users who are not logged in.
+Route::middleware('guest')->group(function () {
+    Route::get('register', [AuthController::class, 'register'])->name('register');
+    Route::post('register', [AuthController::class, 'registerSave'])->name('register.save');
+    Route::get('login', [AuthController::class, 'login'])->name('login');
+    Route::post('login', [AuthController::class, 'loginAction'])->name('login.action');
 });
-  
+
+// --- Authenticated Routes ---
+// Routes for users who are logged in.
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
- 
-    Route::controller(ProductController::class)->prefix('products')->group(function () {
-        Route::get('', 'index')->name('products.index');
-        Route::get('create', 'create')->name('products.create');
-        Route::post('store', 'store')->name('products.store');
-        Route::get('show/{id}', 'show')->name('products.show');
-        Route::get('edit/{id}', 'edit')->name('products.edit');
-        Route::put('edit/{id}', 'update')->name('products.update');
-        Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
-    });
+    Route::get('profile', [AuthController::class, 'profile'])->name('profile');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Resourceful CRUD routes
+    Route::resource('products', ProductController::class);
+    Route::resource('tags', TagController::class)->except(['show']);
 });
