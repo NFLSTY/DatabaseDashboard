@@ -2,9 +2,12 @@
   
 namespace App\Http\Controllers;
   
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
- 
+use App\Models\Store;
+use App\Models\Tag;
+
 class ProductController extends Controller
 {
     /**
@@ -12,9 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::orderBy('created_at', 'DESC')->get();
+        $products = Product::with('store', 'category')->latest()->paginate(20);
   
-        return view('products.index', compact('product'));
+        return view('products.index', compact('products'));
     }
   
     /**
@@ -32,7 +35,7 @@ class ProductController extends Controller
     {
         Product::create($request->all());
  
-        return redirect()->route('products')->with('success', 'Product added successfully');
+        return redirect()->route('products.index')->with('success', 'Product added successfully');
     }
   
     /**
@@ -40,9 +43,9 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = Product::findOrFail($id);
+        $products = Product::findOrFail($id);
   
-        return view('products.show', compact('product'));
+        return view('products.show', compact('products'));
     }
   
     /**
@@ -50,9 +53,12 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::findOrFail($id);
-  
-        return view('products.edit', compact('product'));
+        $products = Product::findOrFail($id);
+        $stores = Store::get()->all();
+        $categories = Category::get()->all();
+        $tags = Tag::get()->all();
+
+        return view('products.edit', compact('products', 'stores', 'categories', 'tags'));
     }
   
     /**
@@ -60,11 +66,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $product = Product::findOrFail($id);
+        $products = Product::findOrFail($id);
   
-        $product->update($request->all());
+        $products->update($request->all());
   
-        return redirect()->route('products')->with('success', 'product updated successfully');
+        return redirect()->route('products.index')->with('success', 'product updated successfully');
     }
   
     /**
@@ -72,10 +78,10 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::findOrFail($id);
+        $products = Product::findOrFail($id);
   
-        $product->delete();
+        $products->delete();
   
-        return redirect()->route('products')->with('success', 'product deleted successfully');
+        return redirect()->route('products.index')->with('success', 'product deleted successfully');
     }
 }
