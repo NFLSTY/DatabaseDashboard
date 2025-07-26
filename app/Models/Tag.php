@@ -24,7 +24,6 @@ class Tag extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
 
     /**
      * The products that belong to the tag.

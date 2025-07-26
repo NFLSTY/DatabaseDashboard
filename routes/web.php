@@ -1,5 +1,6 @@
 <?php
  
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -27,4 +28,5 @@ Route::middleware('auth')->group(function () {
     // Resourceful CRUD routes
     Route::resource('products', ProductController::class);
     Route::resource('tags', TagController::class)->except(['show']);
+    Route::resource('categories', CategoryController::class)->except(['show']);
 });

@@ -12,7 +12,7 @@ class Category extends Model
         'slug',
     ];
 
-    public function product(): HasMany
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
