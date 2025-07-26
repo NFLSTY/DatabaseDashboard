@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\Tag;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -25,17 +26,43 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        // Fetch all necessary data for the form's dropdowns.
+        $stores = Store::orderBy('name')->get();
+        $categories = Category::orderBy('name')->get();
+        $tags = Tag::orderBy('name')->get();
+
+        return view('products.create', compact('stores', 'categories', 'tags'));
     }
-  
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        Product::create($request->all());
- 
-        return redirect()->route('products.index')->with('success', 'Product added successfully');
+        // Validate the incoming request data.
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
+            'store_id' => 'required|exists:stores,id',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id', // Ensure every tag ID exists.
+        ]);
+
+        // Automatically generate the slug.
+        $validated['slug'] = Str::slug($validated['name']);
+
+        // Create the product.
+        $product = Product::create($validated);
+
+        // If tags were selected, attach them to the new product.
+        if (!empty($validated['tags'])) {
+            $product->tags()->attach($validated['tags']);
+        }
+
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
   
     /**
@@ -64,13 +91,30 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        $products = Product::findOrFail($id);
-  
-        $products->update($request->all());
-  
-        return redirect()->route('products.index')->with('success', 'product updated successfully');
+        // Validate the request.
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
+            'store_id' => 'required|exists:stores,id',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
+        ]);
+        
+        // Update the slug if the name has changed.
+        $validated['slug'] = Str::slug($validated['name']);
+
+        // Update the product's main attributes.
+        $product->update($validated);
+
+        // Sync the tags. This will add/remove tags as needed.
+        $product->tags()->sync($request->tags);
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
   
     /**
