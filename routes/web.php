@@ -1,11 +1,12 @@
 <?php
  
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
- 
+
 // --- Guest Routes ---
 // Routes for users who are not logged in.
 Route::middleware('guest')->group(function () {
@@ -18,10 +19,7 @@ Route::middleware('guest')->group(function () {
 // --- Authenticated Routes ---
 // Routes for users who are logged in.
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 

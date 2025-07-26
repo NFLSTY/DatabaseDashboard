@@ -2,10 +2,10 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon">
+            <i class="fas fa-store"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Store Management</div>
     </a>
 
     <!-- Divider -->
@@ -20,13 +20,13 @@
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('products.index') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-fw fa-shopping-bag"></i>
             <span>Products</span></a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('tags.index') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-fw fa-tags"></i>
             <span>Tags</span></a>
     </li>
 
@@ -39,7 +39,7 @@
 
     <li class="nav-item">
         <a class="nav-link" href="/profile">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-fw fa-user"></i>
             <span>Profile</span></a>
     </li>
 
