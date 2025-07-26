@@ -33,9 +33,17 @@
                             <form action="{{ route('register.save') }}" method="POST" class="user">
                                 @csrf
                                 <div class="form-group">
-                                    <input name="name" type="text"
-                                        class="form-control form-control-user @error('name')is-invalid @enderror"
-                                        id="exampleInputName" placeholder="Name">
+                                    <input name="first_name" type="text"
+                                        class="form-control form-control-user @error('first_name')is-invalid @enderror"
+                                        id="exampleInputName" placeholder="First Name">
+                                    @error('name')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <input name="last_name" type="text"
+                                        class="form-control form-control-user @error('last_name')is-invalid @enderror"
+                                        id="exampleInputName" placeholder="Last Name">
                                     @error('name')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
