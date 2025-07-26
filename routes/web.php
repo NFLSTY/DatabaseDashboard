@@ -2,6 +2,7 @@
  
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -27,4 +28,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('tags', TagController::class)->except(['show']);
     Route::resource('categories', CategoryController::class)->except(['show']);
+    Route::resource('stores', StoreController::class)->except(['show']);
 });

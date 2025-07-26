@@ -18,7 +18,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        $stores = Store::all();
+        $stores = Store::where('is_active', true)->get();
         $categories = Category::all();
         $tags = Tag::all();
 

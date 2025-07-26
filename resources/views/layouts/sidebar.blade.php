@@ -38,6 +38,12 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('stores.index') }}">
+            <i class="fas fa-fw fa-store"></i>
+            <span>Stores</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="/profile">
             <i class="fas fa-fw fa-user"></i>
             <span>Profile</span></a>

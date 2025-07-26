@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Store;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -15,6 +17,7 @@ class DashboardController extends Controller
         $categoryCount = Category::count();
         $tagCount = Tag::count();
         $userCount = User::count();
+        $storeCount = Store::count(); // Added store count
 
         $recentProducts = Product::with('category')->latest()->take(5)->get();
 
@@ -23,6 +26,7 @@ class DashboardController extends Controller
             'categoryCount',
             'tagCount',
             'userCount',
+            'storeCount',
             'recentProducts'
         ));
     }
