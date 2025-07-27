@@ -32,8 +32,8 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `reme
 
 INSERT INTO `categories` (`id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
 (1, 'Electronics', 'electronics', '2025-07-26 20:16:19', '2025-07-26 20:16:19'),
-(2, 'Mens Fashion', 'mens-fashion', '2025-07-26 20:16:19', '2025-07-26 20:16:19'),
-(3, 'Womens Fashion', 'womens-fashion', '2025-07-26 20:16:19', '2025-07-26 20:16:19'),
+(2, 'Men\'s Fashion', 'mens-fashion', '2025-07-26 20:16:19', '2025-07-26 20:16:19'),
+(3, 'Women\'s Fashion', 'womens-fashion', '2025-07-26 20:16:19', '2025-07-26 20:16:19'),
 (4, 'Phones & Tablets', 'phones-tablets', '2025-07-26 20:16:19', '2025-07-26 20:16:19'),
 (5, 'Computers & Accessories', 'computers-accessories', '2025-07-26 20:16:19', '2025-07-26 20:16:19'),
 (6, 'Health & Beauty', 'health-beauty', '2025-07-26 20:16:19', '2025-07-26 20:16:19'),
