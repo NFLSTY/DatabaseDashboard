@@ -7,6 +7,7 @@ use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SearchController;
 
 // --- Guest Routes ---
 // Routes for users who are not logged in.
@@ -23,6 +24,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Global search route
+    Route::get('search', [SearchController::class, 'index'])->name('search');
 
     // Resourceful CRUD routes
     Route::resource('products', ProductController::class);
